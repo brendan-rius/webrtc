@@ -101,6 +101,9 @@ type RTCPeerConnection struct {
 	rtpTransceivers []*RTCRtpTransceiver
 	Ontrack         func(*RTCTrack)
 
+	// SCTP
+	sctp *RTCSctpTransport
+
 	// DataChannels
 	dataChannels  map[uint16]*RTCDataChannel
 	Ondatachannel func(*RTCDataChannel)
@@ -118,6 +121,7 @@ func New(config RTCConfiguration) (*RTCPeerConnection, error) {
 		iceConnectionState: ice.ConnectionStateNew,
 		connectionState:    RTCPeerConnectionStateNew,
 		mediaEngine:        DefaultMediaEngine,
+		sctp:               newRTCSctpTransport(),
 		dataChannels:       make(map[uint16]*RTCDataChannel),
 	}
 	err := r.SetConfiguration(config)
